@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="Shortcut icon" type="x-icon" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History & Achievements | Kumasi High School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #FFCBA4;
+            --secondary: #D35400;
+            --accent: #2C3E50;
+            --light: #FFF9F5;
+            --dark: #1A1A1A;
+            --success: #27AE60;
+            --dropdown-bg: #ffffff;
+            --dropdown-hover: #f8f9fa;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        body.menu-open {
+            overflow: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--accent) 0%, #bd720f 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon img {
+            background: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .logo-icon:hover img {
+            transform: scale(1.05);
+        }
+        
+        .logo-text h1 {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            color: var(--primary);
+            font-weight: 500;
+            margin-top: -10px;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            position: relative;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+        }
+        
+        nav ul li {
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a i.fa-chevron-down {
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background: rgba(255, 203, 164, 0.15);
+            color: var(--primary);
+        }
+        
+        nav ul li a.active {
+            color: var(--primary);
+            background: rgba(255, 203, 164, 0.1);
+        }
+        
+        /* Desktop Dropdown Menu Styles */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            padding: 10px 0;
+            border-top: 3px solid var(--primary);
+        }
+        
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu li {
+            display: block;
+            width: 100%;
+            margin: 0;
+        }
+        
+        .dropdown-menu li a {
+            color: var(--accent);
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu li a i {
+            color: var(--secondary);
+            font-size: 1rem;
+            width: 20px;
+        }
+        
+        .dropdown-menu li a:hover {
+            background: var(--light);
+            color: var(--secondary);
+            padding-left: 25px;
+        }
+        
+        .dropdown-menu li a.active {
+            background: var(--light);
+            color: var(--secondary);
+        }
+        
+        /* Right side navigation items */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary);
+            padding: 10px;
+            z-index: 1001;
+        }
+        
+        .search-btn {
+            background: rgba(255, 203, 164, 0.1);
+            border: none;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        
+        /* ===== FIXED MOBILE STYLES ===== */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 5px;
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 8px;
+                padding: 10px;
+                display: none;
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                width: 100%;
+                margin-bottom: 2px;
+            }
+            
+            nav ul li a {
+                padding: 15px;
+                justify-content: space-between;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 5px;
+            }
+            
+            /* FIXED: Mobile dropdown menus */
+            .dropdown-menu {
+                position: static !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                box-shadow: none;
+                background: transparent;
+                margin: 5px 0 5px 15px;
+                border-top: none;
+                min-width: auto;
+                display: none; /* Hidden by default */
+                transition: none;
+            }
+            
+            .dropdown-menu.show {
+                display: block !important;
+            }
+            
+            .dropdown-menu li {
+                margin: 2px 0;
+            }
+            
+            .dropdown-menu li a {
+                color: white;
+                padding: 12px 15px;
+                white-space: normal;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 5px;
+            }
+            
+            .dropdown-menu li a i {
+                color: var(--primary);
+            }
+            
+            .dropdown-menu li a:hover {
+                background: rgba(255, 203, 164, 0.3);
+                color: var(--primary);
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-right {
+                order: 2;
+            }
+        }
+        
+        /* Additional fix for very small screens */
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.7rem;
+            }
+            
+            .logo-icon img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.85), rgba(44, 62, 80, 0.9)), url("3.jpg");
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .page-header h1 span {
+            color: var(--primary);
+        }
+        
+        .page-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            color: #f0f0f0;
+        }
+        
+        /* Timeline */
+        .timeline-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .timeline {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+        
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+        
+        .timeline-item.left {
+            left: 0;
+        }
+        
+        .timeline-item.right {
+            left: 50%;
+        }
+        
+        .timeline-content {
+            padding: 20px 30px;
+            background-color: var(--light);
+            position: relative;
+            border-radius: 6px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--secondary);
+        }
+        
+        .timeline-item.right .timeline-content {
+            border-left: none;
+            border-right: 4px solid var(--secondary);
+        }
+        
+        .timeline-year {
+            font-weight: bold;
+            color: var(--secondary);
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .timeline-year i {
+            color: var(--accent);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -13px;
+            background-color: var(--primary);
+            border: 4px solid var(--secondary);
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+        
+        .timeline-item.right::after {
+            left: -13px;
+        }
+        
+        /* Achievements Section */
+        .achievements {
+            padding: 80px 0;
+            background: var(--light);
+        }
+        
+        .achievement-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .achievement-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+        }
+        
+        .achievement-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .achievement-icon {
+            background: var(--accent);
+            color: var(--primary);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+        
+        .achievement-content {
+            padding: 25px;
+        }
+        
+        .achievement-content h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .achievement-year {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        /* Alumni Section */
+        .alumni-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .alumni-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .alumni-card {
+            text-align: center;
+            padding: 30px 20px;
+            background: var(--light);
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        
+        .alumni-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .alumni-image img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: var(--primary);
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: var(--accent);
+            border: 4px solid var(--secondary);
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(165deg, var(--accent) 0%, #bd720f 100%);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links li {
+            list-style: none;
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .timeline::after {
+                left: 31px;
+            }
+            
+            .timeline-item {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+            
+            .timeline-item.right {
+                left: 0;
+            }
+            
+            .timeline-item::after {
+                left: 18px;
+            }
+            
+            .timeline-item.right::after {
+                left: 18px;
+            }
+            
+            .page-header h1 {
+                font-size: 2.2rem;
+            }
+            
+            
+            
+            .mobile-menu {
+                display: block;
+            }
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #e67e22;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .back-home {
+            display: inline-block;
+            margin-top: 40px;
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-home:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+     <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="l1.png" alt="img">
+                    </div>
+                    <div class="logo-text">
+                        <h1>Kumasi High School</h1>
+                        <p>Senior High School - Ghana</p>
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <!--button class="search-btn" onclick="toggleSearch()">
+                        <i class="fas fa-search"></i>
+                    </button-->
+                    <div class="mobile-menu" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+                
+                <nav>
+                    <ul id="nav-menu">
+                        <!-- Home -->
+                        <li>
+                            <a href="index.html" class="nav-link" onclick="setActive(this)">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                        </li>
+                        
+                         <!-- About Us with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'about-dropdown')">
+                                About Us <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="about-dropdown">
+                                <li>
+                                    <a href="an.html" onclick="setActive(this)">
+                                        <i class="fas fa-history"></i> History & Achievements
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ano.html" onclick="setActive(this)">
+                                        <i class="fas fa-users-cog"></i> School Management
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- Clubs & Society with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'clubs-dropdown')">
+                                Clubs & Society <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="clubs-dropdown">
+                                <li>
+                                    <li>
+                                    <a href="prefects.html" onclick="setActive(this)">
+                                        <i class="fas fa-user-tie"></i> Prefects Council
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="nsmq.html" onclick="setActive(this)">
+                                        <i class="fas fa-trophy"></i> NSMQ Team
+                                    </a>
+
+                                </li>
+                                 <li>
+                                    <a href="Debate.html" onclick="setActive(this)">
+                                        <i class="fas fa-flask"></i> Debate Club
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="clubs.html" onclick="setActive(this)">
+                                        <i class="fas fa-users"></i> Others
+                                    </a>
+                                </li>
+                               
+                                    
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- News & Events with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'news-dropdown')">
+                                News & Events <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="news-dropdown">
+                                <li>
+                                    <a href="news.html" onclick="setActive(this)">
+                                        <i class="fas fa-newspaper"></i> Latest News
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="events.html" onclick="setActive(this)">
+                                        <i class="fas fa-calendar-alt"></i> Upcoming Events
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="gallery.html" onclick="setActive(this)">
+                                        <i class="fas fa-images"></i> Photo Gallery
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- Admissions CTA -->
+                        <li>
+                            <a href="index.html#admissions" class="nav-link" style="background: var(--primary); color: var(--accent); border-radius: 5px; padding: 10px 20px;">
+                                <i class="fas fa-graduation-cap"></i> Admissions
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="container">
+            <h1>Our <span>History & Achievements</span></h1>
+            <p>Celebrating over six decades of academic excellence and contributions to Ghanaian education</p>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="timeline-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Historical Timeline</h2>
+                <p>Milestones in the journey of Kumasi High School since its establishment</p>
+            </div>
+            
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 1964</div>
+                        <h3>Foundation & Establishment</h3>
+                        <p>Kumasi High School started as a private secondary known as Kwame Nkrumah Secondary School. It was established in 1962 by the late S.K. Amoah in rented premises at Asuoyeboah, a suburb of Kumasi. In 1963/64 academic year, it moved to Kwadaso and was housed in rented premises at the present day Peter's Educational Centre.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 1965</div>
+                        <h3>It's Transition</h3>
+                        <p>The then Kwame Nkrumah Secondary School which was a mixed institution was absorbed into the public school system by the Ghana Government in the 1965/66 academic year with Mr. Albert Appiah, formerly of Prempeh College as the first Headmaster.</p><br>
+                        <p>After the 1966 military coup which ousted President Kwame Nkrumah's regime, the Board of Governors of the then Kwame Nkrumah Secondary School, sought the approval of the Ghana Education service and changed the School's name to Kumasi High School.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2000</div>
+                        <h3>The Arise</h3>
+                        <p>An analysis of SSSCE results for science students (Physics, Chemistry, Biology, Elective Mathematics) from 1996 to 2001 showed that the 2000 year group performed below the 1999 and 1996 cohorts but better than the 1998 and 1997 groups. Around this period, the school was cementing its reputation, following a strong performance record in the early to mid-1990s..</p>
+                    </div>
+                </div>
+                <!--
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 1980</div>
+                        <h3>20th Anniversary & Infrastructure Expansion</h3>
+                        <p>The school celebrated its 20th anniversary with the commissioning of a new science block, library, and administration block funded by the Old Students Association and the Ghana Education Service.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 1995</div>
+                        <h3>Introduction of Agricultural Science</h3>
+                        <p>To support Ghana's agricultural development, the school introduced the Agricultural Science program, complete with a school farm and modern laboratories for practical training.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2005</div>
+                        <h3>ICT Integration & Digital Transformation</h3>
+                        <p>KUHIS became a pioneer in ICT education among Ghanaian senior high schools, establishing a fully equipped computer laboratory and integrating ICT across all subjects.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2010</div>
+                        <h3>50th Golden Jubilee Celebration</h3>
+                        <p>The school celebrated 50 years of existence with a year-long celebration that included academic symposiums, cultural displays, and the launch of the KUHIS Endowment Fund to support needy but brilliant students.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2018</div>
+                        <h3>Introduction of Visual Arts Program</h3>
+                        <p>Expanding its curriculum to include creative arts, KUHIS introduced the Visual Arts program, establishing a modern art studio and offering courses in graphic design, sculpture, and picture making.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item left">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2020</div>
+                        <h3>60th Diamond Jubilee</h3>
+                        <p>Despite the COVID-19 pandemic, the school celebrated its 60th anniversary virtually, highlighting six decades of producing leaders in various fields across Ghana and beyond.</p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item right">
+                    <div class="timeline-content">
+                        <div class="timeline-year"><i class="fas fa-calendar-alt"></i> 2023</div>
+                        <h3>Modernization & Expansion</h3>
+                        <p>Completion of a new 3-story classroom block, renovation of all science laboratories, and establishment of a digital library with internet connectivity for students and staff.</p>
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </section>
+
+    <!-- Achievements Section -->
+    <section class="achievements">
+        <div class="container">
+            <div class="section-title">
+                <h2>Notable Achievements</h2>
+                <p>Recognitions and accomplishments that distinguish Kumasi High School</p>
+            </div>
+            
+            <div class="achievement-cards">
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-year">1989, 1994</span>
+                        <h3>Best Business School in West Africa: </h3>
+                        <p>Recognized for excellence in business education from 1989 to 1994.</p>
+                    </div>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-year">1997 & 2019</span>
+                        <h3>Ashanti Region Inter-School Soccer Competition: </h3>
+                        <p>Regional champions in 1997 and 2019.</p>
+                    </div>
+                </div>
+                
+                
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-year">2016 & 2017</span>
+                        <h3>National Science and Maths Quiz (NSMQ):</h3>
+                        <p> Placed fourth nationally in both 2016 and 2017.</p>
+                    </div>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-year">2018</span>
+                        <h3>Embassy Nnimdeɛ Business Quiz:</h3>
+                        <p> Winners of the national competition in 2022.</p>
+                    </div>
+                </div>
+                
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-year">2022 & 2024</span>
+                        <h3>Luv FM High School Debate: </h3>
+                        <p>Champions in 2022 and 2024; tied for the most wins and runner-up finishes in the competition</p>
+                    </div>
+                </div>
+
+                <div class="achievement-card">
+                    <div class="achievement-icon">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="achievement-content">
+                        <span class="achievement-year">2020</span>
+                        <h3>NSMQ Ashanti Region Championship:</h3>
+                        <p> Runners-up in 2022 and champions in 2024.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Alumni Section -->
+    <section class="alumni-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Distinguished Alumni</h2>
+                <p>Notable former students who have made significant contributions to society</p>
+            </div>
+            
+            <div class="alumni-grid">
+                <div class="alumni-card">
+                    <div class="alumni-image">
+                        <img src="adu.jpg" alt="img">
+                    </div>
+                    <h3>Hon. Yaw Osei Adutwum</h3>
+                    <p></p>
+                    <p style="margin-top: 10px; color: var(--accent); font-weight: 600;">Former Minister For Education, Ghana</p>
+                </div>
+                
+                <div class="alumni-card">
+                    <div class="alumni-image">
+                        <img src="bw.jpg" alt="img">
+                    </div>
+                    <h3>Hon. Baah Wiredu</h3>
+                    <p></p>
+                    <p style="margin-top: 10px; color: var(--accent); font-weight: 600;">Former Minister For Finance, Ghana</p>
+                </div>
+                
+                <div class="alumni-card">
+                    <div class="alumni-image">
+                        <img src="rob.jpg" alt="img">
+                    </div>
+                    <h3>Rt. Rev. Prof. Joseph Obiri Yeboah</h3>
+                    <p></p>
+                    <p style="margin-top: 10px; color: var(--accent); font-weight: 600;">Former Moderator of Presbyterian Church of Ghana, chairman of the Christian of Ghana</p>
+                </div>
+                <!--
+                <div class="alumni-card">
+                    <div class="alumni-image">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <h3>Prof. Nana Ama Serwaa</h3>
+                    <p>Class of 1990</p>
+                    <p style="margin-top: 10px; color: var(--accent); font-weight: 600;">Professor of Chemical Engineering, KNUST</p>
+                </div>
+                
+                <div class="alumni-card">
+                    <div class="alumni-image">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3>Mr. Kofi Ansah</h3>
+                    <p>Class of 1995</p>
+                    <p style="margin-top: 10px; color: var(--accent); font-weight: 600;">Award-winning Visual Artist & Sculptor</p>
+                </div>
+                
+                <div class="alumni-card">
+                    <div class="alumni-image">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Ms. Abena Asare</h3>
+                    <p>Class of 2005</p>
+                    <p style="margin-top: 10px; color: var(--accent); font-weight: 600;">BBC News Anchor & Journalist</p>
+                </div>
+            </div>-->
+            <br>
+            </div>
+            
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Kumasi High School</h3>
+                    <p>Premier Senior High School in Ghana since 1960. "Knowledge, Discipline, Excellence"</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="history.html">History & Achievements</a></li>
+                        <li><a href="management.html">School Management</a></li>
+                        <li><a href="index.html#programs">Academic Programs</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Adum, Kumasi, Ghana</li>
+                        <li><i class="fas fa-phone"></i> +233 (0) 32 202 1234</li>
+                        <li><i class="fas fa-envelope"></i> info@kumasihigh.edu.gh</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 Kumasi High School (KUHIS). All rights reserved.</p>
+                <p style="margin-top: 10px;">Designed by The Stem Team & Rankofsoft</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== FIXED JAVASCRIPT FOR MOBILE DROPDOWNS =====
+        
+        // Toggle dropdown menu - FIXED for mobile
+        function toggleDropdown(event, dropdownId) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const dropdown = document.getElementById(dropdownId);
+            const chevron = event.currentTarget.querySelector('i.fa-chevron-down');
+            
+            // Close all other dropdowns first
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                if (menu.id !== dropdownId && menu.classList.contains('show')) {
+                    menu.classList.remove('show');
+                    // Reset chevron for the closed dropdown
+                    const parentLink = menu.closest('.dropdown')?.querySelector('.nav-link i.fa-chevron-down');
+                    if (parentLink) {
+                        parentLink.style.transform = 'rotate(0)';
+                    }
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('show');
+            
+            // Rotate chevron icon
+            if (chevron) {
+                chevron.style.transform = dropdown.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+            }
+        }
+
+        // Toggle mobile menu - FIXED
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const mobileIcon = document.querySelector('.mobile-menu i');
+            
+            navMenu.classList.toggle('active');
+            
+            // Change icon based on menu state
+            if (navMenu.classList.contains('active')) {
+                mobileIcon.className = 'fas fa-times';
+                document.body.classList.add('menu-open');
+            } else {
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Close all dropdowns when closing mobile menu
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset all chevrons
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        }
+
+        // Set active link based on current page
+        function setActive(element) {
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked link
+            if (element) {
+                element.classList.add('active');
+            }
+            
+            // On mobile, close menu after clicking a link
+            if (window.innerWidth <= 992) {
+                const navMenu = document.getElementById('nav-menu');
+                const mobileIcon = document.querySelector('.mobile-menu i');
+                
+                navMenu.classList.remove('active');
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Close all dropdowns
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset all chevrons
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.dropdown') && !event.target.closest('.mobile-menu')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset chevron rotations
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992) {
+                // Reset mobile menu on desktop
+                const navMenu = document.getElementById('nav-menu');
+                const mobileIcon = document.querySelector('.mobile-menu i');
+                
+                navMenu.classList.remove('active');
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Don't close dropdowns on desktop resize - they work differently
+            } else {
+                // On mobile, ensure dropdowns are properly styled
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    if (menu.classList.contains('show')) {
+                        menu.style.display = 'block';
+                    }
+                });
+            }
+        });
+
+        // Set active link based on current page URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const currentHash = window.location.hash;
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const linkHref = link.getAttribute('href');
+                
+                // Check if this link matches current page
+                if (linkHref === currentPage || 
+                    (currentPage === 'index.html' && linkHref === 'index.html') ||
+                    (currentHash && linkHref === currentHash)) {
+                    link.classList.add('active');
+                }
+                
+                // Also check parent dropdown items
+                if (link.closest('.dropdown-menu')) {
+                    if (linkHref === currentPage) {
+                        const parentDropdown = link.closest('.dropdown');
+                        if (parentDropdown) {
+                            const parentLink = parentDropdown.querySelector('.nav-link');
+                            if (parentLink) {
+                                parentLink.classList.add('active');
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Search functionality
+        function toggleSearch() {
+            alert('Search feature coming soon!');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        
+        // Sticky header background on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(44, 62, 80, 0.95)';
+            } else {
+                header.style.backgroundColor = '';
+            }
+        });
+
+        
+        
+        // Timeline animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if(entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+        
+        // Observe timeline items
+        document.querySelectorAll('.timeline-item').forEach(item => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateY(20px)';
+            item.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>

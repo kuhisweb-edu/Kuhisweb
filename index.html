@@ -1,0 +1,1625 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="Shortcut icon" type="x-icon" href="logo.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Kumasi High School | Excellence in Senior High Education</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #FFCBA4;
+            --secondary: #D35400;
+            --accent: #2C3E50;
+            --light: #FFF9F5;
+            --dark: #1A1A1A;
+            --success: #27AE60;
+            --dropdown-bg: #ffffff;
+            --dropdown-hover: #f8f9fa;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        body.menu-open {
+            overflow: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--accent) 0%, #bd720f 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon img {
+            background: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .logo-icon:hover img {
+            transform: scale(1.05);
+        }
+        
+        .logo-text h1 {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            color: var(--primary);
+            font-weight: 500;
+            margin-top: -10px;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            position: relative;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+        }
+        
+        nav ul li {
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a i.fa-chevron-down {
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background: rgba(255, 203, 164, 0.15);
+            color: var(--primary);
+        }
+        
+        nav ul li a.active {
+            color: var(--primary);
+            background: rgba(255, 203, 164, 0.1);
+        }
+        
+        /* Desktop Dropdown Menu Styles */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            padding: 10px 0;
+            border-top: 3px solid var(--primary);
+        }
+        
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu li {
+            display: block;
+            width: 100%;
+            margin: 0;
+        }
+        
+        .dropdown-menu li a {
+            color: var(--accent);
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu li a i {
+            color: var(--secondary);
+            font-size: 1rem;
+            width: 20px;
+        }
+        
+        .dropdown-menu li a:hover {
+            background: var(--light);
+            color: var(--secondary);
+            padding-left: 25px;
+        }
+        
+        .dropdown-menu li a.active {
+            background: var(--light);
+            color: var(--secondary);
+        }
+        
+        /* Right side navigation items */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary);
+            padding: 10px;
+            z-index: 1001;
+        }
+        
+        .search-btn {
+            background: rgba(255, 203, 164, 0.1);
+            border: none;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        
+        /* ===== FIXED MOBILE STYLES ===== */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 5px;
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 8px;
+                padding: 10px;
+                display: none;
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                width: 100%;
+                margin-bottom: 2px;
+            }
+            
+            nav ul li a {
+                padding: 15px;
+                justify-content: space-between;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 5px;
+            }
+            
+            /* FIXED: Mobile dropdown menus */
+            .dropdown-menu {
+                position: static !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                box-shadow: none;
+                background: transparent;
+                margin: 5px 0 5px 15px;
+                border-top: none;
+                min-width: auto;
+                display: none; /* Hidden by default */
+                transition: none;
+            }
+            
+            .dropdown-menu.show {
+                display: block !important;
+            }
+            
+            .dropdown-menu li {
+                margin: 2px 0;
+            }
+            
+            .dropdown-menu li a {
+                color: white;
+                padding: 12px 15px;
+                white-space: normal;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 5px;
+            }
+            
+            .dropdown-menu li a i {
+                color: var(--primary);
+            }
+            
+            .dropdown-menu li a:hover {
+                background: rgba(255, 203, 164, 0.3);
+                color: var(--primary);
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-right {
+                order: 2;
+            }
+        }
+        
+        /* Additional fix for very small screens */
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.7rem;
+            }
+            
+            .logo-icon img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        /* Hero Section */
+        .hero {
+            width: 100%;
+            min-height: 500px;
+            background-size: cover;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url("b1.jpg");
+            background-position: center;
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+            background-repeat: no-repeat;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+            animation: slideshow 25s infinite;
+        }
+
+        @keyframes slideshow {
+            0%, 16% {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('b1.jpg');
+                background-size: cover;
+                background-position: center;
+            }
+            17%, 32% {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('B2.png');
+                background-size: cover;
+                background-position: center;
+            }
+            33%, 48% {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('b3.png');
+                background-size: cover;
+                background-position: center;
+            }
+            49%, 64% {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('b4.png');
+                background-size: cover;
+                background-position: center;
+            }
+            65%, 80% {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('b5.jpg');
+                background-size: cover;
+                background-position: center;
+            }
+            81%, 100% {
+                background: linear-gradient(to bottom, rgba(0,0,0,0.3), rgba(0,0,0,0.7)), url('b6.jpeg');
+                background-size: cover;
+                background-position: center;
+            }
+        }
+        
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: white;
+        }
+        
+        .hero h2 span {
+            color: var(--primary);
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 30px;
+            color: #f0f0f0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: var(--secondary);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background: #e67e22;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .btn-outline:hover {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        
+        .btn-peach {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        
+        .btn-peach:hover {
+            background: #ffb07c;
+            color: var(--accent);
+        }
+        
+        /* Sections */
+        section {
+            padding: 80px 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .section-title p {
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        /* About Section */
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            font-size: 18px;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-image {
+            flex: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .about-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.5s;
+        }
+        
+        .about-image:hover img {
+            transform: scale(1.05);
+        }
+        
+        /* Programs Section */
+        .programs {
+            background: white;
+        }
+        
+        .program-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .program-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border-top: 4px solid var(--primary);
+        }
+        
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .program-icon {
+            background: var(--accent);
+            color: var(--primary);
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+        }
+        
+        .program-content {
+            padding: 25px;
+        }
+        
+        .program-content h3 {
+            color: var(--accent);
+            margin-bottom: 15px;
+        }
+        
+        .program-content ul {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+        
+        .program-content li {
+            margin-bottom: 8px;
+        }
+        
+        /* Facilities Section */
+        .facilities {
+            background: var(--light);
+        }
+        
+        .facility-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .facility-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            text-align: center;
+            padding: 30px 20px;
+            transition: transform 0.3s;
+        }
+        
+        .facility-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .facility-icon {
+            background: var(--primary);
+            color: var(--accent);
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 20px;
+        }
+        
+        /* News Section */
+        .news-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .news-card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s;
+            background: white;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .news-card:hover .news-image img {
+            transform: scale(1.1);
+        }
+        
+        .news-content {
+            padding: 25px;
+        }
+        
+        .news-date {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        /* Houses Section */
+        .houses {
+            background: var(--accent);
+            color: white;
+        }
+        
+        .houses .section-title h2,
+        .houses .section-title p {
+            color: white;
+        }
+        
+        .house-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .house-card {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s;
+        }
+        
+        .house-card:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .house-color {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            margin: 0 auto 20px;
+        }
+        
+        .red-house { background: #E74C3C; }
+        .blue-house { background: #3498DB; }
+        .green-house { background: #27AE60; }
+        .yellow-house { background: #F1C40F; }
+        
+        /* Contact Section */
+        .contact-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 50px;
+        }
+        
+        .contact-info h3 {
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+        
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+        
+        .contact-icon {
+            background: var(--primary);
+            color: var(--accent);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .contact-form input,
+        .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        
+        .contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(165deg, var(--accent) 0%, #bd720f 100%);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+            font-size: 1.3rem;
+        }
+        
+        .footer-links li {
+            list-style: none;
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+            font-size: 0.9rem;
+        }
+        
+        /* Ghana Flag Element */
+        .ghana-flag {
+            display: inline-flex;
+            height: 20px;
+            width: 30px;
+            margin-right: 10px;
+            position: relative;
+        }
+        
+        .flag-stripe {
+            height: 33.33%;
+            width: 100%;
+        }
+        
+        .red-stripe { background: #CE1126; }
+        .yellow-stripe { background: #FCD116; }
+        .green-stripe { background: #006B3F; }
+        
+        .flag-star {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: black;
+            font-size: 8px;
+        }
+        
+        .ghana-text {
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+            color: var(--primary);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .hero h2 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="l1.png" alt="img">
+                    </div>
+                    <div class="logo-text">
+                        <h1>Kumasi High School</h1>
+                        <p>Senior High School - Ghana</p>
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <!--button class="search-btn" onclick="toggleSearch()">
+                        <i class="fas fa-search"></i>
+                    </button--->
+                    <div class="mobile-menu" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+                
+                <nav>
+                    <ul id="nav-menu">
+                        <!-- Home -->
+                        <li>
+                            <a href="index.html" class="nav-link" onclick="setActive(this)">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                        </li>
+                        
+            <!-- About Us with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'about-dropdown')">
+                                About Us <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="about-dropdown">
+                                <li>
+                                    <a href="an.html" onclick="setActive(this)">
+                                        <i class="fas fa-history"></i> History & Achievements
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ano.html" onclick="setActive(this)">
+                                        <i class="fas fa-users-cog"></i> School Management
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- Clubs & Society with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'clubs-dropdown')">
+                                Clubs & Society <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="clubs-dropdown">
+                                <li>
+                                    <li>
+                                    <a href="prefects.html" onclick="setActive(this)">
+                                        <i class="fas fa-user-tie"></i> Prefects Council
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="nsmq.html" onclick="setActive(this)">
+                                        <i class="fas fa-trophy"></i> NSMQ Team
+                                    </a>
+
+                                </li>
+                                 <li>
+                                    <a href="Debate.html" onclick="setActive(this)">
+                                        <i class="fas fa-flask"></i> Debate Club
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="clubs.html" onclick="setActive(this)">
+                                        <i class="fas fa-users"></i> Others
+                                    </a>
+                                </li>
+                               
+                                    
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- News & Events with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'news-dropdown')">
+                                News & Events <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="news-dropdown">
+                                <li>
+                                    <a href="news.html" onclick="setActive(this)">
+                                        <i class="fas fa-newspaper"></i> Latest News
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="news.html" onclick="setActive(this)">
+                                        <i class="fas fa-calendar-alt"></i> Upcoming Events
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="gallery.html" onclick="setActive(this)">
+                                        <i class="fas fa-images"></i> Photo Gallery
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- Admissions CTA -->
+                        <li>
+                            <a href="index.html#admissions" class="nav-link" style="background: var(--primary); color: var(--accent); border-radius: 5px; padding: 10px 20px;">
+                                <i class="fas fa-graduation-cap"></i> Admissions
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container">
+            <h2>Kumasi High School <span>- KUHIS</span></h2>
+            <p>Premier Senior High School in Ghana offering quality education in General Science, Agric Science, Business, General Arts, and Visual Arts since 1964.</p>
+            <div class="ghana-text">
+                <div class="ghana-flag">
+                    <div class="flag-stripe red-stripe"></div>
+                    <div class="flag-stripe yellow-stripe"></div>
+                    <div class="flag-stripe green-stripe"></div>
+                    <div class="flag-star">★</div>
+                </div>
+                <span>Excellence in Ghanaian Education</span>
+            </div>
+            <a href="#admissions" class="btn" style="margin-top: 30px;">2025 Admissions Open</a>
+            <a href="#programs" class="btn btn-outline" style="margin-top: 30px; margin-left: 15px;">Our Programs</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Kumasi High School</h2>
+                <p>Established in 1964, Kumasi High School (KUHIS) is one of Ghana's leading Senior High Schools, located in the heart of the Ashanti Region.</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p>Kumasi High School commonly known as KUHIS, is a Category A public all-boys senior high school located in Kumasi, in the Ashanti Region of Ghana. Established in 1962 by S. K. Amoah, the school has developed a strong reputation for academic excellence, particularly in business education.</p>
+                    <p>KUHIS is noted for its performance in both academics and extracurricular activities. The school has a history of success in the Ashanti Region inter-school competitions and Ashanti Region super zonals.</p>
+                    <p>Kumasi High School is tied for the most wins and current runner-up in the Luv FM High School Debate. Kumasi High School also won the inaugural USA Ambassador Business Quiz and is a one-time winner of the Ashanti Regional Science and Maths Quiz, where KUHIS triumphed over city rivals Opoku Ware School and Prempeh College in 2024.</p>
+                    <p><b>Our Vision</b> is to be seen as a model learning institution recognized globally for providing academic and moral excellence.</p>
+                    <p><b>Our Mission</b> is to equip our students with excellent academic and moral training to help prepare them fit into the world of work.</p>
+                    
+                    <div style="display: flex; gap: 30px; margin-top: 30px; flex-wrap: wrap;">
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--secondary); font-size: 2.5rem;">2,000+</h3>
+                            <p>Current Students</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--secondary); font-size: 2.5rem;">150+</h3>
+                            <p>Teaching Staff</p>
+                        </div>
+                        <div style="text-align: center;">
+                            <h3 style="color: var(--secondary); font-size: 2.5rem;">85%</h3>
+                            <p>University Placement</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="about-image">
+                    <img src="en.png" alt="Kumasi High School Campus">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="programs" id="programs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Academic Programs</h2>
+                <p>Kumasi High School offers five main programs of study as approved by the Ghana Education Service</p>
+            </div>
+            
+            <div class="program-cards">
+                <div class="program-card">
+                    <div class="program-icon">
+                        <i class="fas fa-flask"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3>General Science</h3>
+                        <p>Comprehensive science program preparing students for careers in medicine, engineering, and technology.</p>
+                        <ul>
+                            <li>Physics</li>
+                            <li>Chemistry</li>
+                            <li>Biology</li>
+                            <li>Elective Mathematics</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">
+                        <i class="fas fa-tractor"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3>Agricultural Science</h3>
+                        <p>Hands-on agricultural training combined with scientific principles for modern farming and agribusiness.</p>
+                        <ul>
+                            <li>Animal Husbandry</li>
+                            <li>Agriculture</li>
+                            
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3>Business</h3>
+                        <p>Comprehensive business education preparing students for careers in accounting, management, and entrepreneurship.</p>
+                        <ul>
+                            <li>Accounting</li>
+                            <li>Business Management</li>
+                            <li>Economics</li>
+                            <li>Costing</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">
+                        <i class="fas fa-book-open"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3>General Arts</h3>
+                        <p>Diverse arts program covering humanities, social sciences, and languages for well-rounded education.</p>
+                        <ul>
+                            <li>Literature in English</li>
+                            <li>History</li>
+                            <li>Government</li>
+                            <li>Christian Religious Studies</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="program-card">
+                    <div class="program-icon">
+                        <i class="fas fa-palette"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3>Visual Arts</h3>
+                        <p>Creative program developing artistic skills and appreciation for careers in fine arts and design.</p>
+                        <ul>
+                            <li>General Knowledge in Art</li>
+                            <li>Graphic Design</li>
+                            <li>Picture Making</li>
+                            <li>Sculpture</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Facilities Section -->
+    <section class="facilities" id="facilities">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Facilities</h2>
+                <p>Kumasi High School is equipped with modern facilities to support quality teaching and learning</p>
+            </div>
+            
+            <div class="facility-cards">
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-microscope"></i>
+                    </div>
+                    <h3>Science Laboratories</h3>
+                    <p>Fully equipped labs for Physics, Chemistry, and Biology practicals</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-book"></i>
+                    </div>
+                    <h3>Library</h3>
+                    <p>Modern library with textbooks, reference materials, and digital resources</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-desktop"></i>
+                    </div>
+                    <h3>ICT Lab</h3>
+                    <p>Computer laboratory with internet access for digital literacy training</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-basketball-ball"></i>
+                    </div>
+                    <h3>Sports Facilities</h3>
+                    <p>Football field, basketball court, volleyball court, and athletics track</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>Dining Hall</h3>
+                    <p>Spacious dining facility providing nutritious meals for students</p>
+                </div>
+                
+                <div class="facility-card">
+                    <div class="facility-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3>Boarding Houses</h3>
+                    <p>Secure and comfortable boarding facilities</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section id="news">
+        <div class="container">
+            <div class="section-title">
+                <h2>Latest News & Events</h2>
+                <p>Stay updated with the latest happenings and achievements at Kumasi High School</p>
+            </div>
+            
+            <div class="news-cards">
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="3.jpg" alt="Science Competition">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date"> 2024</span>
+                        <h3>KUHIS Wins Regional Science & Maths Quiz</h3>
+                        <p>Our General Science students emerged winners of the Ashanti Regional Science & Mathematics Quiz, defeating 15 other schools.</p>
+                        <a href="#" style="color: var(--secondary); font-weight: 600; text-decoration: none;">Read More →</a>
+                    </div>
+                </div>
+                
+                <!--div class="news-card">
+                    <div class="news-image">
+                        <img src="https://images.unsplash.com/photo-1546410531-bb4caa6b424d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2071&q=80" alt="Career Fair">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date">October 28, 2023</span>
+                        <h3>Annual Career Fair Success</h3>
+                        <p>Over 50 professionals from various fields visited the school to guide students on career choices and higher education opportunities.</p>
+                        <a href="#" style="color: var(--secondary); font-weight: 600; text-decoration: none;">Read More →</a>
+                    </div>
+                </div-->
+                
+                <div class="news-card">
+                    <div class="news-image">
+                        <img src="DM.jpeg" alt="Debate Competition">
+                    </div>
+                    <div class="news-content">
+                        <span class="news-date"> 2024</span>
+                        <h3>Luv FM High School Debate</h3>
+                        <p>Kumasi High School Champions in 2022 and 2024; tied for the most wins and runner-up finishes in the competition</p>
+                        <a href="#" style="color: var(--secondary); font-weight: 600; text-decoration: none;">Read More →</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 40px;">
+                <a href="news.html" class="btn btn-peach">View All News</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Admissions Section -->
+    <section id="admissions" style="background: var(--light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Admissions</h2>
+                <p>Join Kumasi High School for the 2025/2026 Academic Year</p>
+            </div>
+            
+            <div style="max-width: 800px; margin: 0 auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.05);">
+                <h3 style="color: var(--accent); margin-bottom: 20px;">Admission Requirements & Process</h3>
+                <p style="margin-bottom: 20px;">Admission to Kumasi High School is through the Computerized School Selection and Placement System (CSSPS) managed by the Ghana Education Service.</p>
+                
+                <h4 style="color: var(--secondary); margin: 25px 0 15px;">Requirements:</h4>
+                <ul style="margin-left: 20px; margin-bottom: 25px;">
+                    <li style="margin-bottom: 10px;">Successful completion of Basic Education (B.E.C.E)</li>
+                    <li style="margin-bottom: 10px;">Aggregate score meeting the cut-off point for selected program</li>
+                    <li style="margin-bottom: 10px;">Good conduct report from previous school</li>
+                    
+                </ul>
+                
+                <h4 style="color: var(--secondary); margin: 25px 0 15px;">Program-Specific Requirements:</h4>
+                <p style="margin-bottom: 20px;">Each program has specific subject requirements. Please contact the admissions office for detailed information.</p>
+                
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 30px;">
+                    <a href="#contact" class="btn">Contact Admissions</a>
+                    <a href="#" class="btn" style="background: var(--primary); color: var(--accent);">Download Prospectus</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch with Kumasi High School for inquiries, visits, or collaborations</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Contact Information</h3>
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div>
+                            <h4>School Location</h4>
+                            <p>Kumasi High School<br>
+                            P.O. Box KS 1247<br>
+                            Adum, Kumasi<br>
+                            Ashanti Region, Ghana</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Phone Numbers</h4>
+                            <p>Administration: +233 (0) 24 419 8684<br>
+                            Admissions: +233 (0) 24 419 8684</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div>
+                            <h4>Email Addresses</h4>
+                            <p>General: info@kumasihigh.edu.gh<br>
+                            Admissions: admissions@kumasihigh.edu.gh</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div>
+                            <h4>Office Hours</h4>
+                            <p>Monday - Friday: 8:00 AM - 5:00 PM<br>
+                            Saturday: 9:00 AM - 1:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+    <h3>Send us a Message</h3>
+    <form action="https://formsubmit.co/aidooroni@gmail.com" method="POST">
+        <input type="text" name="name" placeholder="Your Name" required>
+        <input type="email" name="email" placeholder="Your Email" required>
+        <input type="text" name="subject" placeholder="Subject" required>
+        <textarea name="message" placeholder="Your Message" required></textarea>
+        
+        <!-- Optional: Prevent spam 
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://yoursite.com/thank-you.html">-->
+        
+        <button type="submit" class="btn">Send Message</button>
+    </form>
+</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Kumasi High School</h3>
+                    <p>Premier Senior High School in Ghana since 1964. Providing quality education in General Science, Agric Science, Business, General Arts, and Visual Arts.</p>
+                    <p style="margin-top: 15px; color: var(--primary); font-weight: 600;">"Truth Conquers"</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About KUHIS</a></li>
+                        <li><a href="#programs">Academic Programs</a></li>
+                        <li><a href="#facilities">Facilities</a></li>
+                        <li><a href="#admissions">Admissions</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Academics</h3>
+                    <ul class="footer-links">
+                        <li><a href="#programs">General Science</a></li>
+                        <li><a href="#programs">Agricultural Science</a></li>
+                        <li><a href="#programs">Business</a></li>
+                        <li><a href="#programs">General Arts</a></li>
+                        <li><a href="#programs">Visual Arts</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Newsletter</h3>
+                    <p>Subscribe to receive updates about school events, academic news, and announcements.</p>
+                    <form style="margin-top: 15px;">
+                        <input type="email" placeholder="Your Email" style="width: 100%; padding: 10px; border-radius: 5px; border: none; margin-bottom: 10px;">
+                        <button type="submit" class="btn" style="padding: 10px 20px; width: 100%; background: var(--primary); color: var(--accent);">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 Kumasi High School (KUHIS). All rights reserved. | A Ghana Education Service Institution</p>
+                <p style="margin-top: 10px;">Designed by Rankofsoft & The Stem Team</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        
+        
+        // Toggle dropdown menu 
+        function toggleDropdown(event, dropdownId) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const dropdown = document.getElementById(dropdownId);
+            const chevron = event.currentTarget.querySelector('i.fa-chevron-down');
+            
+            // Close all other dropdowns first
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                if (menu.id !== dropdownId && menu.classList.contains('show')) {
+                    menu.classList.remove('show');
+                    // Reset chevron for the closed dropdown
+                    const parentLink = menu.closest('.dropdown')?.querySelector('.nav-link i.fa-chevron-down');
+                    if (parentLink) {
+                        parentLink.style.transform = 'rotate(0)';
+                    }
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('show');
+            
+            // Rotate chevron icon
+            if (chevron) {
+                chevron.style.transform = dropdown.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+            }
+        }
+
+        // Toggle mobile menu 
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const mobileIcon = document.querySelector('.mobile-menu i');
+            
+            navMenu.classList.toggle('active');
+            
+            // Change icon based on menu state
+            if (navMenu.classList.contains('active')) {
+                mobileIcon.className = 'fas fa-times';
+                document.body.classList.add('menu-open');
+            } else {
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Close all dropdowns when closing mobile menu
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset all chevrons
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        }
+
+        // Set active link based on current page
+        function setActive(element) {
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked link
+            if (element) {
+                element.classList.add('active');
+            }
+            
+            // On mobile, close menu after clicking a link
+            if (window.innerWidth <= 992) {
+                const navMenu = document.getElementById('nav-menu');
+                const mobileIcon = document.querySelector('.mobile-menu i');
+                
+                navMenu.classList.remove('active');
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Close all dropdowns
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset all chevrons
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.dropdown') && !event.target.closest('.mobile-menu')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset chevron rotations
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992) {
+                // Reset mobile menu on desktop
+                const navMenu = document.getElementById('nav-menu');
+                const mobileIcon = document.querySelector('.mobile-menu i');
+                
+                navMenu.classList.remove('active');
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Don't close dropdowns on desktop resize - they work differently
+            } else {
+                // On mobile, ensure dropdowns are properly styled
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    if (menu.classList.contains('show')) {
+                        menu.style.display = 'block';
+                    }
+                });
+            }
+        });
+
+        // Set active link based on current page URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const currentHash = window.location.hash;
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const linkHref = link.getAttribute('href');
+                
+                // Check if this link matches current page
+                if (linkHref === currentPage || 
+                    (currentPage === 'index.html' && linkHref === 'index.html') ||
+                    (currentHash && linkHref === currentHash)) {
+                    link.classList.add('active');
+                }
+                
+                // Also check parent dropdown items
+                if (link.closest('.dropdown-menu')) {
+                    if (linkHref === currentPage) {
+                        const parentDropdown = link.closest('.dropdown');
+                        if (parentDropdown) {
+                            const parentLink = parentDropdown.querySelector('.nav-link');
+                            if (parentLink) {
+                                parentLink.classList.add('active');
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Search functionality
+        function toggleSearch() {
+            alert('Search feature coming soon!');
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                if (this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                }
+            });
+        });
+
+        // Form submission
+        const contactForm = document.getElementById('contactForm');
+        if (contactForm) {
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for your message! We will get back to you soon.');
+                this.reset();
+            });
+        }
+
+        // Sticky header background on scroll
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.backgroundColor = 'rgba(44, 62, 80, 0.95)';
+            } else {
+                header.style.backgroundColor = '';
+            }
+        });
+
+        // Ghana flag animation
+        const ghanaFlag = document.querySelector('.ghana-flag');
+        if (ghanaFlag) {
+            ghanaFlag.addEventListener('mouseover', function() {
+                this.style.transform = 'scale(1.1)';
+            });
+            
+            ghanaFlag.addEventListener('mouseout', function() {
+                this.style.transform = 'scale(1)';
+            });
+        }
+    </script>
+</body>
+</html>

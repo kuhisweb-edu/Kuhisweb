@@ -1,0 +1,1425 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prefects Council | Kumasi High School</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        :root {
+            --primary: #FFCBA4;
+            --secondary: #D35400;
+            --accent: #2C3E50;
+            --light: #FFF9F5;
+            --dark: #1A1A1A;
+            --success: #27AE60;
+            --dropdown-bg: #ffffff;
+            --dropdown-hover: #f8f9fa;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+        
+        body.menu-open {
+            overflow: hidden;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--accent) 0%, #bd720f 100%);
+            color: white;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo-icon img {
+            background: #fff;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px;
+            transition: transform 0.3s;
+        }
+        
+        .logo-icon:hover img {
+            transform: scale(1.05);
+        }
+        
+        .logo-text h1 {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
+            color: white;
+        }
+        
+        .logo-text p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+            color: var(--primary);
+            font-weight: 500;
+            margin-top: -10px;
+        }
+        
+        /* Navigation Styles */
+        nav {
+            position: relative;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 10px;
+        }
+        
+        nav ul li {
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 10px 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            border-radius: 5px;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a i.fa-chevron-down {
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+        
+        nav ul li a:hover {
+            background: rgba(255, 203, 164, 0.15);
+            color: var(--primary);
+        }
+        
+        nav ul li a.active {
+            color: var(--primary);
+            background: rgba(255, 203, 164, 0.1);
+        }
+        
+        /* Desktop Dropdown Menu Styles */
+        .dropdown-menu {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: white;
+            min-width: 250px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+            padding: 10px 0;
+            border-top: 3px solid var(--primary);
+        }
+        
+        .dropdown-menu.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .dropdown-menu li {
+            display: block;
+            width: 100%;
+            margin: 0;
+        }
+        
+        .dropdown-menu li a {
+            color: var(--accent);
+            padding: 12px 20px;
+            width: 100%;
+            border-radius: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            white-space: nowrap;
+        }
+        
+        .dropdown-menu li a i {
+            color: var(--secondary);
+            font-size: 1rem;
+            width: 20px;
+        }
+        
+        .dropdown-menu li a:hover {
+            background: var(--light);
+            color: var(--secondary);
+            padding-left: 25px;
+        }
+        
+        .dropdown-menu li a.active {
+            background: var(--light);
+            color: var(--secondary);
+        }
+        
+        /* Right side navigation items */
+        .nav-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .mobile-menu {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--primary);
+            padding: 10px;
+            z-index: 1001;
+        }
+        
+        .search-btn {
+            background: rgba(255, 203, 164, 0.1);
+            border: none;
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .search-btn:hover {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        
+        /* ===== FIXED MOBILE STYLES ===== */
+        @media (max-width: 992px) {
+            .header-content {
+                flex-wrap: wrap;
+            }
+            
+            nav {
+                order: 3;
+                width: 100%;
+                margin-top: 15px;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                gap: 5px;
+                background: rgba(0, 0, 0, 0.3);
+                border-radius: 8px;
+                padding: 10px;
+                display: none;
+                max-height: 60vh;
+                overflow-y: auto;
+            }
+            
+            nav ul.active {
+                display: flex;
+            }
+            
+            nav ul li {
+                width: 100%;
+                margin-bottom: 2px;
+            }
+            
+            nav ul li a {
+                padding: 15px;
+                justify-content: space-between;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 5px;
+            }
+            
+            /* FIXED: Mobile dropdown menus */
+            .dropdown-menu {
+                position: static !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                transform: none !important;
+                box-shadow: none;
+                background: transparent;
+                margin: 5px 0 5px 15px;
+                border-top: none;
+                min-width: auto;
+                display: none; /* Hidden by default */
+                transition: none;
+            }
+            
+            .dropdown-menu.show {
+                display: block !important;
+            }
+            
+            .dropdown-menu li {
+                margin: 2px 0;
+            }
+            
+            .dropdown-menu li a {
+                color: white;
+                padding: 12px 15px;
+                white-space: normal;
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 5px;
+            }
+            
+            .dropdown-menu li a i {
+                color: var(--primary);
+            }
+            
+            .dropdown-menu li a:hover {
+                background: rgba(255, 203, 164, 0.3);
+                color: var(--primary);
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+            
+            .nav-right {
+                order: 2;
+            }
+        }
+        
+        /* Additional fix for very small screens */
+        @media (max-width: 480px) {
+            .logo-text h1 {
+                font-size: 1.3rem;
+            }
+            
+            .logo-text p {
+                font-size: 0.7rem;
+            }
+            
+            .logo-icon img {
+                width: 45px;
+                height: 45px;
+            }
+        }
+        
+        /* Page Header */
+        .page-header {
+            background: linear-gradient(rgba(44, 62, 80, 0.9), rgba(44, 62, 80, 0.9)), url("hb1.jpg");
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+        
+        .page-header h1 span {
+            color: var(--primary);
+        }
+        
+        /* Prefects Intro */
+        .prefects-intro {
+            padding: 60px 0;
+            background: white;
+        }
+        
+        .intro-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+        
+        .intro-text h2 {
+            color: var(--accent);
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        
+        .intro-text p {
+            color: #555;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+        
+        .prefect-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            padding: 20px;
+            background: var(--light);
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            color: var(--secondary);
+            display: block;
+        }
+        
+        .stat-label {
+            color: var(--accent);
+            font-size: 0.9rem;
+        }
+        
+        .intro-image img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        /* Executive Council */
+        .executive-section {
+            padding: 80px 0;
+            background: var(--light);
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            width: 70px;
+            height: 3px;
+            background: var(--secondary);
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+        
+        .executive-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+        }
+        
+        .executive-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s;
+            text-align: center;
+        }
+        
+        .executive-card:hover {
+            transform: translateY(-10px);
+        }
+        
+        .executive-image {
+            height: 250px;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 5rem;
+            position: relative;
+        }
+        
+        .executive-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--secondary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .executive-content {
+            padding: 20px;
+        }
+        
+        .executive-name {
+            color: var(--accent);
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+        }
+        
+        .executive-position {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .executive-class {
+            color: #777;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+        }
+        
+        .executive-social {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .executive-social a {
+            width: 35px;
+            height: 35px;
+            background: var(--light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            transition: all 0.3s;
+        }
+        
+        .executive-social a:hover {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        /* Prefects by House */
+        .house-prefects {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .house-tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 40px;
+        }
+        
+        .house-tab {
+            padding: 12px 30px;
+            background: var(--light);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--accent);
+            transition: all 0.3s;
+        }
+        
+        .house-tab.active {
+            background: var(--secondary);
+            color: white;
+        }
+        
+        .house-tab:hover:not(.active) {
+            background: var(--primary);
+        }
+        
+        .house-content {
+            display: none;
+        }
+        
+        .house-content.active {
+            display: block;
+        }
+        
+        .house-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+        
+        .house-card {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            transition: transform 0.3s;
+        }
+        
+        .house-card:hover {
+            transform: translateX(10px);
+        }
+        
+        .house-avatar {
+            width: 80px;
+            height: 80px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--accent);
+            font-size: 2rem;
+            flex-shrink: 0;
+        }
+        
+        .house-info h4 {
+            color: var(--accent);
+            margin-bottom: 5px;
+            font-size: 1.2rem;
+        }
+        
+        .house-info p {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .house-info span {
+            color: #777;
+            font-size: 0.9rem;
+        }
+        
+        /* Prefect Duties */
+        .duties-section {
+            padding: 80px 0;
+            background: linear-gradient(135deg, var(--accent) 0%, #1a2632 100%);
+            color: white;
+        }
+        
+        .duties-section .section-title h2 {
+            color: white;
+        }
+        
+        .duties-section .section-title h2::after {
+            background: var(--primary);
+        }
+        
+        .duties-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+        
+        .duty-card {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            border-radius: 10px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,203,164,0.2);
+        }
+        
+        .duty-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+        
+        .duty-card h3 {
+            margin-bottom: 15px;
+            color: var(--primary);
+        }
+        
+        /* Footer (same as your existing footer) */
+        footer {
+            background: var(--accent);
+            color: white;
+            padding: 60px 0 30px;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+        
+        .footer-column h3 {
+            color: var(--primary);
+            margin-bottom: 25px;
+        }
+        
+        .footer-links li {
+            list-style: none;
+            margin-bottom: 12px;
+        }
+        
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-links a {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--primary);
+            color: var(--accent);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 30px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #aaa;
+        }
+        
+        /* Responsive */
+        @media (max-width: 992px) {
+            .executive-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .intro-content {
+                grid-template-columns: 1fr;
+            }
+            
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu {
+                display: block;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .executive-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .prefect-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+     <!-- Header & Navigation -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <img src="l1.png" alt="img">
+                    </div>
+                    <div class="logo-text">
+                        <h1>Kumasi High School</h1>
+                        <p>Senior High School - Ghana</p>
+                    </div>
+                </div>
+                
+                <div class="nav-right">
+                    <!--button class="search-btn" onclick="toggleSearch()">
+                        <i class="fas fa-search"></i>
+                    </button-->
+                    <div class="mobile-menu" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars"></i>
+                    </div>
+                </div>
+                
+                <nav>
+                    <ul id="nav-menu">
+                        <!-- Home -->
+                        <li>
+                            <a href="index.html" class="nav-link" onclick="setActive(this)">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                        </li>
+                        
+                        <!-- About Us with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'about-dropdown')">
+                                About Us <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="about-dropdown">
+                                <li>
+                                    <a href="an.html" onclick="setActive(this)">
+                                        <i class="fas fa-history"></i> History & Achievements
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="ano.html" onclick="setActive(this)">
+                                        <i class="fas fa-users-cog"></i> School Management
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- Clubs & Society with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'clubs-dropdown')">
+                                Clubs & Society <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="clubs-dropdown">
+                                <li>
+                                    <li>
+                                    <a href="prefects.html" onclick="setActive(this)">
+                                        <i class="fas fa-user-tie"></i> Prefects Council
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="nsmq.html" onclick="setActive(this)">
+                                        <i class="fas fa-trophy"></i> NSMQ Team
+                                    </a>
+
+                                </li>
+                                 <li>
+                                    <a href="clubs.html#academic" onclick="setActive(this)">
+                                        <i class="fas fa-flask"></i> Debate Club
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="clubs.html" onclick="setActive(this)">
+                                        <i class="fas fa-users"></i> Others
+                                    </a>
+                                </li>
+                               
+                                    
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- News & Events with Dropdown -->
+                        <li class="dropdown">
+                            <a href="javascript:void(0)" class="nav-link" onclick="toggleDropdown(event, 'news-dropdown')">
+                                News & Events <i class="fas fa-chevron-down"></i>
+                            </a>
+                            <ul class="dropdown-menu" id="news-dropdown">
+                                <li>
+                                    <a href="news.html" onclick="setActive(this)">
+                                        <i class="fas fa-newspaper"></i> Latest News
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="events.html" onclick="setActive(this)">
+                                        <i class="fas fa-calendar-alt"></i> Upcoming Events
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="gallery.html" onclick="setActive(this)">
+                                        <i class="fas fa-images"></i> Photo Gallery
+                                    </a>
+                                </li>
+                                
+                            </ul>
+                        </li>
+                        
+                        <!-- Admissions CTA -->
+                        <li>
+                            <a href="index.html#admissions" class="nav-link" style="background: var(--primary); color: var(--accent); border-radius: 5px; padding: 10px 20px;">
+                                <i class="fas fa-graduation-cap"></i> Admissions
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+
+    <section class="page-header">
+        <div class="container">
+            <h1>Prefects <span>Council</span></h1>
+            <p>Student leaders dedicated to service, discipline, and excellence</p>
+        </div>
+    </section>
+
+    <section class="prefects-intro">
+        <div class="container">
+            <div class="intro-content">
+                <div class="intro-text">
+                    <h2>Leading by Example</h2>
+                    <p>The Prefects Council of Kumasi High School comprises dedicated student leaders who serve as a bridge between the student body and school administration. Elected through a rigorous process, these young leaders embody the school's core values of knowledge, discipline, and excellence.</p>
+                    <p>Our prefects are responsible for maintaining discipline, organizing student activities, and representing student interests in school governance. They undergo leadership training and serve as role models for their peers.</p>
+                    
+                    <div class="prefect-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">53</span>
+                            <span class="stat-label">Total Prefects</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Executive Members</span>
+                        </div>
+                        
+                    </div>
+                </div>
+                <div class="intro-image">
+                    <img src="ex.png" alt="Prefects Council">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="executive-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Executive Council</h2>
+                <p>The leadership team steering the prefects body</p>
+            </div>
+            
+            <div class="executive-grid">
+                <div class="executive-card">
+                    <div class="executive-image">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="executive-badge">Head Prefect</span>
+                    </div>
+                    <div class="executive-content">
+                        <h3 class="executive-name">Adu Frimpong Gerald</h3>
+                        <span class="executive-position">Head Prefect</span>
+                        <div class="executive-class">General Science 5</div>
+                        
+                    </div>
+                </div>
+                
+                <div class="executive-card">
+                    <div class="executive-image">
+                        <i class="fas fa-user-tie"></i>
+                        <span class="executive-badge">Assistant Head</span>
+                    </div>
+                    <div class="executive-content">
+                        <h3 class="executive-name">Kamkam Andrews</h3>
+                        <span class="executive-position">Assistant Head Prefect</span>
+                        <div class="executive-class">General Science 2</div>
+                        
+                    </div>
+                </div>
+                
+                <div class="executive-card">
+                    <div class="executive-image">
+                        <i class="fas fa-book-open"></i>
+                        <span class="executive-badge">1st Assistant Head</span>
+                    </div>
+                    <div class="executive-content">
+                        <h3 class="executive-name">Appiah Kusi Philip</h3>
+                        <span class="executive-position">1st Assistant Head</span>
+                        <div class="executive-class">General Arts 2</div>
+                        
+                    </div>
+                </div>
+                
+                <!---<div class="executive-card">
+                    <div class="executive-image">
+                        <i class="fas fa-shield-alt"></i>
+                        <span class="executive-badge">Discipline</span>
+                    </div>
+                    <div class="executive-content">
+                        <h3 class="executive-name">Akua Serwaa</h3>
+                        <span class="executive-position">Discipline Prefect</span>
+                        <div class="executive-class">Business 3</div>
+                        <div class="executive-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="executive-card">
+                    <div class="executive-image">
+                        <i class="fas fa-futbol"></i>
+                        <span class="executive-badge">Sports</span>
+                    </div>
+                    <div class="executive-content">
+                        <h3 class="executive-name">Yaw Frimpong</h3>
+                        <span class="executive-position">Sports Prefect</span>
+                        <div class="executive-class">General Arts 2</div>
+                        <div class="executive-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="executive-card">
+                    <div class="executive-image">
+                        <i class="fas fa-palette"></i>
+                        <span class="executive-badge">Entertainment</span>
+                    </div>
+                    <div class="executive-content">
+                        <h3 class="executive-name">Esi Nyarko</h3>
+                        <span class="executive-position">Entertainment Prefect</span>
+                        <div class="executive-class">Visual Arts 3</div>
+                        <div class="executive-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="executive-card">
+                    <div class="executive-image">
+                        <i class="fas fa-hand-holding-heart"></i>
+                        <span class="executive-badge">Welfare</span>
+                    </div>
+                    <div class="executive-content">
+                        <h3 class="executive-name">Mensah Osei</h3>
+                        <span class="executive-position">Welfare Prefect</span>
+                        <div class="executive-class">General Arts 2</div>
+                        <div class="executive-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="executive-card">
+                    <div class="executive-image">
+                        <i class="fas fa-broom"></i>
+                        <span class="executive-badge">Environmental</span>
+                    </div>
+                    <div class="executive-content">
+                        <h3 class="executive-name">Adjei Boateng</h3>
+                        <span class="executive-position">Environmental Prefect</span>
+                        <div class="executive-class">Agric 3</div>
+                        <div class="executive-social">
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+                            <a href="#"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>--->
+    </section>
+
+    <!----<section class="house-prefects">
+        <div class="container">
+            <div class="section-title">
+                <h2>House Prefects</h2>
+                <p>Student leaders representing our four prestigious houses</p>
+            </div>
+            
+            <div class="house-tabs">
+                <button class="house-tab active" data-house="guggisberg">Guggisberg House</button>
+                <button class="house-tab" data-house="balme">Balme House</button>
+                <button class="house-tab" data-house="agrey">Agrey House</button>
+                <button class="house-tab" data-house="ackah">Ackah House</button>
+            </div>
+            
+            <div id="guggisberg" class="house-content active">
+                <div class="house-grid">
+                    <div class="house-card">
+                        <div class="house-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="house-info">
+                            <h4>Kwabena Nkansah</h4>
+                            <p>House Prefect</p>
+                            <span>Science 3 • Blue House</span>
+                        </div>
+                    </div>
+                    <div class="house-card">
+                        <div class="house-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="house-info">
+                            <h4>Akosua Manu</h4>
+                            <p>Assistant House Prefect</p>
+                            <span>Arts 2 • Blue House</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="balme" class="house-content">
+                <div class="house-grid">
+                    <div class="house-card">
+                        <div class="house-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="house-info">
+                            <h4>Yaw Asare</h4>
+                            <p>House Prefect</p>
+                            <span>Business 3 • Yellow House</span>
+                        </div>
+                    </div>
+                    <div class="house-card">
+                        <div class="house-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="house-info">
+                            <h4>Afia Sarpong</h4>
+                            <p>Assistant House Prefect</p>
+                            <span>Science 2 • Yellow House</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="agrey" class="house-content">
+                <div class="house-grid">
+                    <div class="house-card">
+                        <div class="house-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="house-info">
+                            <h4>Kofi Mensah</h4>
+                            <p>House Prefect</p>
+                            <span>Arts 3 • Red House</span>
+                        </div>
+                    </div>
+                    <div class="house-card">
+                        <div class="house-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="house-info">
+                            <h4>Abena Ofori</h4>
+                            <p>Assistant House Prefect</p>
+                            <span>Business 2 • Red House</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="ackah" class="house-content">
+                <div class="house-grid">
+                    <div class="house-card">
+                        <div class="house-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="house-info">
+                            <h4>Emmanuel Tetteh</h4>
+                            <p>House Prefect</p>
+                            <span>Agric 3 • Green House</span>
+                        </div>
+                    </div>
+                    <div class="house-card">
+                        <div class="house-avatar">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div class="house-info">
+                            <h4>Mawusi Dogbe</h4>
+                            <p>Assistant House Prefect</p>
+                            <span>Science 2 • Green House</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>-->
+
+    <section class="duties-section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Prefects' Responsibilities</h2>
+                <p>Serving the school community with dedication</p>
+            </div>
+            
+            <div class="duties-grid">
+                <div class="duty-card">
+                    <div class="duty-icon">
+                        <i class="fas fa-gavel"></i>
+                    </div>
+                    <h3>Discipline</h3>
+                    <p>Maintaining order and ensuring students adhere to school rules and regulations.</p>
+                </div>
+                
+                <div class="duty-card">
+                    <div class="duty-icon">
+                        <i class="fas fa-hands-helping"></i>
+                    </div>
+                    <h3>Student Welfare</h3>
+                    <p>Addressing student concerns and acting as a liaison with administration.</p>
+                </div>
+                
+                <div class="duty-card">
+                    <div class="duty-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3>Event Organization</h3>
+                    <p>Planning and coordinating school events, programs, and activities.</p>
+                </div>
+                
+                <div class="duty-card">
+                    <div class="duty-icon">
+                        <i class="fas fa-chalkboard-teacher"></i>
+                    </div>
+                    <h3>Academic Support</h3>
+                    <p>Promoting academic excellence and organizing study groups.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>Kumasi High School</h3>
+                    <p>Premier Senior High School in Ghana since 1964. "Knowledge, Discipline, Excellence"</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="ano.html">School Management</a></li>
+                        <li><a href="prefects.html">Prefects Council</a></li>
+                        <li><a href="nsmq.html">NSMQ Team</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Contact Info</h3>
+                    <ul class="footer-links">
+                        <li><i class="fas fa-map-marker-alt"></i> Adum, Kumasi, Ghana</li>
+                        <li><i class="fas fa-phone"></i> +233 (0) 32 202 1234</li>
+                        <li><i class="fas fa-envelope"></i> info@kumasihigh.edu.gh</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2026 Kumasi High School (KUHIS). All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ===== JAVASCRIPT FOR MOBILE DROPDOWNS =====
+        
+        // Toggle dropdown menu - FIXED for mobile
+        function toggleDropdown(event, dropdownId) {
+            event.preventDefault();
+            event.stopPropagation();
+            
+            const dropdown = document.getElementById(dropdownId);
+            const chevron = event.currentTarget.querySelector('i.fa-chevron-down');
+            
+            // Close all other dropdowns first
+            document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                if (menu.id !== dropdownId && menu.classList.contains('show')) {
+                    menu.classList.remove('show');
+                    // Reset chevron for the closed dropdown
+                    const parentLink = menu.closest('.dropdown')?.querySelector('.nav-link i.fa-chevron-down');
+                    if (parentLink) {
+                        parentLink.style.transform = 'rotate(0)';
+                    }
+                }
+            });
+            
+            // Toggle current dropdown
+            dropdown.classList.toggle('show');
+            
+            // Rotate chevron icon
+            if (chevron) {
+                chevron.style.transform = dropdown.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+            }
+        }
+
+        // Toggle mobile menu - FIXED
+        function toggleMobileMenu() {
+            const navMenu = document.getElementById('nav-menu');
+            const mobileIcon = document.querySelector('.mobile-menu i');
+            
+            navMenu.classList.toggle('active');
+            
+            // Change icon based on menu state
+            if (navMenu.classList.contains('active')) {
+                mobileIcon.className = 'fas fa-times';
+                document.body.classList.add('menu-open');
+            } else {
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Close all dropdowns when closing mobile menu
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset all chevrons
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        }
+
+        // Set active link based on current page
+        function setActive(element) {
+            // Remove active class from all nav links
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            
+            // Add active class to clicked link
+            if (element) {
+                element.classList.add('active');
+            }
+            
+            // On mobile, close menu after clicking a link
+            if (window.innerWidth <= 992) {
+                const navMenu = document.getElementById('nav-menu');
+                const mobileIcon = document.querySelector('.mobile-menu i');
+                
+                navMenu.classList.remove('active');
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Close all dropdowns
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset all chevrons
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!event.target.closest('.dropdown') && !event.target.closest('.mobile-menu')) {
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    menu.classList.remove('show');
+                });
+                
+                // Reset chevron rotations
+                document.querySelectorAll('.fa-chevron-down').forEach(chevron => {
+                    chevron.style.transform = 'rotate(0)';
+                });
+            }
+        });
+
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            if (window.innerWidth > 992) {
+                // Reset mobile menu on desktop
+                const navMenu = document.getElementById('nav-menu');
+                const mobileIcon = document.querySelector('.mobile-menu i');
+                
+                navMenu.classList.remove('active');
+                mobileIcon.className = 'fas fa-bars';
+                document.body.classList.remove('menu-open');
+                
+                // Don't close dropdowns on desktop resize - they work differently
+            } else {
+                // On mobile, ensure dropdowns are properly styled
+                document.querySelectorAll('.dropdown-menu').forEach(menu => {
+                    if (menu.classList.contains('show')) {
+                        menu.style.display = 'block';
+                    }
+                });
+            }
+        });
+
+        // Set active link based on current page URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop() || 'index.html';
+            const currentHash = window.location.hash;
+            
+            document.querySelectorAll('.nav-link').forEach(link => {
+                const linkHref = link.getAttribute('href');
+                
+                // Check if this link matches current page
+                if (linkHref === currentPage || 
+                    (currentPage === 'index.html' && linkHref === 'index.html') ||
+                    (currentHash && linkHref === currentHash)) {
+                    link.classList.add('active');
+                }
+                
+                // Also check parent dropdown items
+                if (link.closest('.dropdown-menu')) {
+                    if (linkHref === currentPage) {
+                        const parentDropdown = link.closest('.dropdown');
+                        if (parentDropdown) {
+                            const parentLink = parentDropdown.querySelector('.nav-link');
+                            if (parentLink) {
+                                parentLink.classList.add('active');
+                            }
+                        }
+                    }
+                }
+            });
+        });
+
+        // Search functionality
+        function toggleSearch() {
+            alert('Search feature coming soon!');
+        }
+
+
+        // House tabs
+        document.querySelectorAll('.house-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.house-tab').forEach(t => t.classList.remove('active'));
+                document.querySelectorAll('.house-content').forEach(c => c.classList.remove('active'));
+                
+                this.classList.add('active');
+                const houseId = this.getAttribute('data-house');
+                document.getElementById(houseId).classList.add('active');
+            });
+        });
+
+        
+    </script>
+</body>
+</html>
